@@ -1,4 +1,5 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
+const { PermissionOverwriteManager, PermissionOverwrites, SlashCommandBuilder, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
 
@@ -40,6 +41,21 @@ module.exports = {
             });
         }
 
+        if (role.position >= interaction.member.roles.highest.position && interaction.user.id !== interaction.guild.ownerId) {
+            await interaction.reply({
+                content: "Vous ne pouvez pas retirer un rôle plus haut que votre rôle le plus haut.",
+                ephemeral: true
+            });
+            return;
+        }
+
+        if (interaction.guild.members.me.roles.highest.position <= role.position) {
+            await interaction.reply({
+                content: "Je ne peux pas retirer un rôle au-dessus de mon plus haut rôle.",
+                ephemeral:true
+            });
+            return;
+        }
 
         await member.roles.remove(role)
         await interaction.reply({
