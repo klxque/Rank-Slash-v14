@@ -17,7 +17,7 @@ Un bot Discord développé en **Node.js** permettant d’ajouter, suivre ou rest
 ### 1. Cloner le projet
 
 ```bash
-git clone https://github.com/<ton-nom-utilisateur>/rank-bot.git
+git clone https://github.com/klxque/Rank-Slash-v14.git
 cd rank-bot
 ```
 ### 2. Installer les dépendances
