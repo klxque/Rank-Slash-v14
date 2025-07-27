@@ -32,11 +32,22 @@ module.exports = {
 
             const addChannelLogsKey = `server_${interaction.guild.id}_addChannelLogs`;
             const removeChannelLogsKey = `server_${interaction.guild.id}_removeChannelLogs`;
-            const elevationChannelLogsKey = `server_${interaction.guild.id}_elevationChannelLogs`;
 
             await db.set(addChannelLogsKey, addChannel.id)
             await db.set(removeChannelLogsKey, removeChannel.id)
-            await db.set(elevationChannelLogsKey, elevationChannel.id)
+
+            if (elevationChannel) {
+                const elevationChannelLogsKey = `server_${interaction.guild.id}_elevationChannelLogs`;
+                await db.set(elevationChannelLogsKey, elevationChannel.id)
+            }
+
+            if (elevationChannel) {
+                await interaction.reply({
+                    content: `Les logs d'ajouts de rôle seront désormais envoyé dans ${addChannel}.\nLes logs de retraits de rôle seront désormais envoyé dans ${removeChannel}.\nLes alertes d'élévations de privilèges seront désormais envoyé dans ${elevationChannel}`,
+                    ephemeral: true
+                });
+                return;
+            }
 
             await interaction.reply({
                 content: `Les logs d'ajouts de rôle seront désormais envoyé dans ${addChannel}.\nLes logs de retraits de rôle seront désormais envoyé dans ${removeChannel}.`,
